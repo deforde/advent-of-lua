@@ -53,7 +53,6 @@ local function accumulate_recursive_sizes(node, max_size)
 end
 
 local function find_smallest_dir_in_excess(node, min_size, size)
-    assert(size ~= nil)
     if (node.size >= min_size and node.size <= size and #node.children ~= 0) then
         size = node.size
     end
@@ -70,7 +69,7 @@ local function create_tree()
     for line in io.lines("problems/problem_07.txt") do
         if (string.sub(line, 1, 1) == "$") then
             if (string.sub(line, 3, 3) ~= "l") then
-                local dirname = string.sub(line, string.find(line, "[./%a]+$"), string.len(line))
+                local dirname = string.sub(line, string.find(line, "[./%a]+$"))
                 if (dirname == "..") then
                     cur = cur.parent
                 elseif (dirname == "/") then
@@ -85,7 +84,7 @@ local function create_tree()
             if (start_idx ~= nil) then
                 size = tonumber(string.sub(line, start_idx, end_idx))
             end
-            local dirname = string.sub(line, string.find(line, "[./%a]+$"), string.len(line))
+            local dirname = string.sub(line, string.find(line, "[./%a]+$"))
             add_child(dirname, cur, size)
         end
     end
